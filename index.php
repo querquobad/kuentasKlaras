@@ -5,6 +5,23 @@ function exception_error_handler($no_err, $desc_err, $archivo_err, $linea_err ) 
 }
 set_error_handler("exception_error_handler");
 
+// Configuración
+/*
+ * TODO
+ * Pendiente hacer alguna rutina de importacion que valide que las cosas que se están importando
+ * en la configuración son válidas
+ */
+//require_once 'kuentasKlaras.ini';
+
+// Conexión con BD
+// TODO Esto debería venir en la configuracion
+$db = new pdo(
+	'sqlite:/var/www/phpliteadmin/kuentasKlaras',
+	null,
+	null,
+	array(PDO::ATTR_PERSISTENT => true)
+);
+
 // Verifica sesión
 /*
  * TODO
@@ -16,13 +33,7 @@ set_error_handler("exception_error_handler");
  * También considerar que diferentes usuarios tienen diferentes cuentas, si todo se guarda en la
  * misma base entonces hay que modificar la estructura de la base para que distinga cuentas entre
  * usuarios.
- *
- * Usuarios y bancos:
- * En la BD hay un catálogo de bancos, de entrada propondría que un banco se "comparte" entre los
- * diferentes usuarios, sin embargo si yo le llamo "mi_banco" a Santander y otro le llama diferente
- * con el alias de la cuenta suena a problemas. Considera quitar el "alias" de la tabla "cuentas".
  */
-//require_once 'sesion.php';
 
 
 

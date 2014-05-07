@@ -1,0 +1,58 @@
+----
+-- phpLiteAdmin database dump (http://phpliteadmin.googlecode.com)
+-- phpLiteAdmin version: 1.9.5
+-- Exported: 5:10pm on May 7, 2014 (CDT)
+-- database file: ./kuentasKlaras
+----
+BEGIN TRANSACTION;
+
+----
+-- Drop table for bancos
+----
+DROP TABLE "bancos";
+
+----
+-- Table structure for bancos
+----
+CREATE TABLE 'bancos' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'nombre' TEXT NOT NULL);
+
+----
+-- Drop table for cuentas
+----
+DROP TABLE "cuentas";
+
+----
+-- Table structure for cuentas
+----
+CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT, 'numero_cuenta' INTEGER, 'tipo_cuenta' INTEGER, 'banco' INTEGER, 'usuario' INTEGER);
+
+----
+-- Drop table for cuentas_tipo
+----
+DROP TABLE "cuentas_tipo";
+
+----
+-- Table structure for cuentas_tipo
+----
+CREATE TABLE 'cuentas_tipo' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT);
+
+----
+-- Drop table for transacciones
+----
+DROP TABLE "transacciones";
+
+----
+-- Table structure for transacciones
+----
+CREATE TABLE 'transacciones' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT, 'cargo' INTEGER, 'abono' INTEGER, 'timestamp' DATETIME);
+
+----
+-- Drop table for usuarios
+----
+DROP TABLE "usuarios";
+
+----
+-- Table structure for usuarios
+----
+CREATE TABLE 'usuarios' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usuario' TEXT, 'pass' TEXT);
+COMMIT;
