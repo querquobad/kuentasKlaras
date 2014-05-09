@@ -7,9 +7,9 @@
 BEGIN TRANSACTION;
 
 ----
--- Drop table for bancos
+-- DROP TABLE for bancos
 ----
-DROP TABLE "bancos";
+DROP TABLE IF EXISTS "bancos";
 
 ----
 -- Table structure for bancos
@@ -17,42 +17,53 @@ DROP TABLE "bancos";
 CREATE TABLE 'bancos' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'nombre' TEXT NOT NULL);
 
 ----
--- Drop table for cuentas
+-- DROP TABLE for cuentas
 ----
-DROP TABLE "cuentas";
+DROP TABLE IF EXISTS "cuentas";
 
 ----
 -- Table structure for cuentas
 ----
-CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT, 'numero_cuenta' INTEGER, 'tipo_cuenta' INTEGER, 'banco' INTEGER, 'usuario' INTEGER);
+CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT NOT NULL, 'numero_cuenta' INTEGER NOT NULL, 'tipo_cuenta' INTEGER NOT NULL, 'banco' INTEGER, 'usuario' INTEGER NOT NULL);
 
 ----
--- Drop table for cuentas_tipo
+-- DROP TABLE for cuentas_tipo
 ----
-DROP TABLE "cuentas_tipo";
+DROP TABLE IF EXISTS "cuentas_tipo";
 
 ----
 -- Table structure for cuentas_tipo
 ----
-CREATE TABLE 'cuentas_tipo' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT);
+CREATE TABLE 'cuentas_tipo' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL);
 
 ----
--- Drop table for transacciones
+-- DROP TABLE for transacciones
 ----
-DROP TABLE "transacciones";
+DROP TABLE IF EXISTS "transacciones";
 
 ----
 -- Table structure for transacciones
 ----
-CREATE TABLE 'transacciones' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT, 'cargo' INTEGER, 'abono' INTEGER, 'timestamp' DATETIME);
+CREATE TABLE 'transacciones' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'cargo' INTEGER NOT NULL, 'abono' INTEGER NOT NULL, 'timestamp' DATETIME NOT NULL, 'referencia' INTEGER NOT NULL);
 
 ----
--- Drop table for usuarios
+-- DROP TABLE for usuarios
 ----
-DROP TABLE "usuarios";
+DROP TABLE IF EXISTS "usuarios";
 
 ----
 -- Table structure for usuarios
 ----
-CREATE TABLE 'usuarios' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usuario' TEXT, 'pass' TEXT);
+CREATE TABLE 'usuarios' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usuario' TEXT NOT NULL, 'pass' TEXT);
+
+----
+-- DROP TABLE for transaccion_ref
+----
+DROP TABLE IF EXISTS "transaccion_ref";
+
+----
+-- Table structure for transaccion_ref
+----
+CREATE TABLE 'transaccion_ref' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL)
+
 COMMIT;
