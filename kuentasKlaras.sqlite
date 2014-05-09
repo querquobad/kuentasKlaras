@@ -3,6 +3,7 @@
 -- phpLiteAdmin version: 1.9.5
 -- Exported: 5:10pm on May 7, 2014 (CDT)
 -- database file: ./kuentasKlaras
+-- TODO recuerda hacer que las columnas que NO deban tener nulos ponerlas como NOT NULL
 ----
 BEGIN TRANSACTION;
 
@@ -44,6 +45,7 @@ DROP TABLE IF EXISTS "transacciones";
 ----
 -- Table structure for transacciones
 ----
+
 CREATE TABLE 'transacciones' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'cargo' INTEGER NOT NULL, 'abono' INTEGER NOT NULL, 'timestamp' DATETIME NOT NULL, 'referencia' INTEGER NOT NULL);
 
 ----
