@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS "cuentas";
 ----
 -- Table structure for cuentas
 ----
-CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT NOT NULL, 'numero_cuenta' INTEGER NOT NULL, 'tipo_cuenta' INTEGER NOT NULL, 'banco' INTEGER, 'usuario' INTEGER NOT NULL);
+CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT NOT NULL, 'numero_cuenta' INTEGER NOT NULL, 'tipo_cuenta' INTEGER NOT NULL, 'banco' INTEGER DEFAULT NULL, 'usuario' INTEGER NOT NULL);
 
 ----
 -- DROP TABLE for cuentas_tipo
@@ -46,7 +46,16 @@ DROP TABLE IF EXISTS "transacciones";
 -- Table structure for transacciones
 ----
 
-CREATE TABLE 'transacciones' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'cargo' INTEGER NOT NULL, 'abono' INTEGER NOT NULL, 'timestamp' DATETIME NOT NULL, 'referencia' INTEGER NOT NULL);
+CREATE TABLE 'transacciones' (
+	'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	'cargo' INTEGER NOT NULL CONSTRAINT cargo_bool CHECK (cargo=0 or cargo=1),
+	'monto' INTEGER NOT NULL CONSTRAINT monto_positivo CHECK (monto>=0),
+	'timestamp' DATETIME NOT NULL DEFAULT CURRENT_DATE,
+	'referencia' INTEGER NOT NULL,
+	'cuenta' INTEGER NOT NULL,
+	CONSTRAINT fk_referencia FOREIGN KEY('referencia') REFERENCES 'transaccion_ref'('id') ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_cuenta FOREIGN KEY ('cuenta') REFERENCES 'cuentas' (id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 ----
 -- DROP TABLE for usuarios
@@ -66,6 +75,6 @@ DROP TABLE IF EXISTS "transaccion_ref";
 ----
 -- Table structure for transaccion_ref
 ----
-CREATE TABLE 'transaccion_ref' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL)
+CREATE TABLE 'transaccion_ref' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL);
 
 COMMIT;
