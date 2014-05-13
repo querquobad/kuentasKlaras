@@ -25,7 +25,16 @@ DROP TABLE IF EXISTS "cuentas";
 ----
 -- Table structure for cuentas
 ----
-CREATE TABLE 'cuentas' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'alias' TEXT NOT NULL, 'numero_cuenta' INTEGER NOT NULL, 'tipo_cuenta' INTEGER NOT NULL, 'banco' INTEGER DEFAULT NULL, 'usuario' INTEGER NOT NULL);
+CREATE TABLE 'cuentas' (
+	'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	'alias' TEXT NOT NULL, 'numero_cuenta' INTEGER NOT NULL,
+	'tipo_cuenta' INTEGER NOT NULL,
+	'banco' INTEGER DEFAULT NULL,
+	'usuario' INTEGER NOT NULL,
+	CONSTRAINT fk_cuenta_tipo FOREIGN KEY ('tipo_cuenta') REFERENCES 'cuentas_tipo' (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_banco FOREIGN KEY ('banco') REFERENCES 'bancos' (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_usuario FOREIGN KEY ('usuario') REFERENCES 'usuarios' (id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 ----
 -- DROP TABLE for cuentas_tipo
@@ -48,12 +57,12 @@ DROP TABLE IF EXISTS "transacciones";
 
 CREATE TABLE 'transacciones' (
 	'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-	'cargo' INTEGER NOT NULL CONSTRAINT cargo_bool CHECK (cargo=0 or cargo=1),
+	'cargo' BOOLEAN NOT NULL CONSTRAINT cargo_bool CHECK (cargo=0 or cargo=1),
 	'monto' INTEGER NOT NULL CONSTRAINT monto_positivo CHECK (monto>=0),
 	'timestamp' DATETIME NOT NULL DEFAULT CURRENT_DATE,
 	'referencia' INTEGER NOT NULL,
 	'cuenta' INTEGER NOT NULL,
-	CONSTRAINT fk_referencia FOREIGN KEY('referencia') REFERENCES 'transaccion_ref'('id') ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_referencia FOREIGN KEY ('referencia') REFERENCES 'transaccion_ref'('id') ON DELETE RESTRICT ON UPDATE CASCADE
 	CONSTRAINT fk_cuenta FOREIGN KEY ('cuenta') REFERENCES 'cuentas' (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -65,16 +74,16 @@ DROP TABLE IF EXISTS "usuarios";
 ----
 -- Table structure for usuarios
 ----
-CREATE TABLE 'usuarios' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usuario' TEXT NOT NULL, 'pass' TEXT);
+CREATE TABLE 'usuarios' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'usuario' TEXT NOT NULL, 'pass' TEXT DEFAULT NULL);
 
 ----
--- DROP TABLE for transaccion_ref
+-- DROP TABLE for referencias
 ----
-DROP TABLE IF EXISTS "transaccion_ref";
+DROP TABLE IF EXISTS "referencias";
 
 ----
--- Table structure for transaccion_ref
+-- Table structure for referencias
 ----
-CREATE TABLE 'transaccion_ref' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL);
+CREATE TABLE 'referencias' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'descripcion' TEXT NOT NULL);
 
 COMMIT;
